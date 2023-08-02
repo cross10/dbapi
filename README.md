@@ -1,11 +1,11 @@
-# leveldb-api
+# dbapi
 ## 把一些简单的go-leveldb操作封装成函数
 ### 使用方法：
 ``` golang
 package main
 
 import (
-  "github.com/cross10/leveldb-api"
+  "github.com/cross10/dbapi"
   "github.com/syndtr/goleveldb/leveldb"
 )
 
@@ -24,12 +24,12 @@ func main() {
 	defer db.Close()
 
   // 存储
-	if err := leveldb-api.SetData("test", []byte{'a'}, db); err != nil {
+	if err := dbapi.SetData("test", []byte{'a'}, db); err != nil {
 		 panic(err)
 	}
 
   // 读取
-	has, err := leveldb-api.HaveKey("test", db)
+	has, err := dbapi.HaveKey("test", db)
 	if err != nil {
 		 panic(err)
 	}
