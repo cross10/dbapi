@@ -1,15 +1,17 @@
 # dbapi
 ## 把一些简单的go-leveldb操作封装成函数
-### 使用方法：
+### 使用示例：
 ``` golang
 package main
 
 import (
-  "github.com/cross10/dbapi"
-  "github.com/syndtr/goleveldb/leveldb"
+	"log"
+
+	"github.com/cross10/dbapi"
+	"github.com/syndtr/goleveldb/leveldb"
 )
 
-var db  *leveldb.DB
+var db *leveldb.DB
 
 func init() {
 	var err error
@@ -23,19 +25,24 @@ func init() {
 func main() {
 	defer db.Close()
 
-  // 存储
+	// 存储
 	if err := dbapi.SetData("test", []byte{'a'}, db); err != nil {
-		 panic(err)
+		panic(err)
 	}
 
-  // 读取
+	// 判断key是否存在
 	has, err := dbapi.HaveKey("test", db)
 	if err != nil {
-		 panic(err)
+		panic(err)
 	}
-  if has {
-    fmt.Println(string(has))
-  }
+	if has {
+		// 获取数据
+		if data, err := dbapi.GetData("test", db); err != nil {
+			panic(err)
+		} else {
+			log.Println(string(data))
+		}
+	}
 
 }
 ```
